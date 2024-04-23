@@ -2,6 +2,6 @@
 run this command from your terminal to create a django project:
 
 ``` bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/willyummaclean/django-template/main/project_template.sh?token=GHSAT0AAAAAACKJZH6MOPLVTOLAUT2DARKWZRIHL5Q)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/willyummaclean/django-template/main/project_template.sh)"
 
 
