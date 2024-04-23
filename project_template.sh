@@ -521,8 +521,10 @@ echo '[FORMAT]
 pipenv run bash -c "python3 manage.py migrate"
 git init
 git remote add origin REPO_NAME 
+git branch -M main
 git add --all
 git commit -m "Initial commit"
+git push -u origin main
 
 echo "**********************************"
 echo ""
