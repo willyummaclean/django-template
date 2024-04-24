@@ -3,7 +3,7 @@
 echo "Enter a single word to prefix your project name and API app name:"
 read -p "> " PROJECT_NAME
 
-echo "Enter the SSH address for your github repo:"
+echo "Enter the SSH address for your Github repository:"
 read -p "> " REPO_NAME
 
 curl -L -s 'https://raw.githubusercontent.com/github/gitignore/master/Python.gitignore' > .gitignore
@@ -187,10 +187,11 @@ echo '
     }
   }
 ]
+
 ' > ./${PROJECT_NAME}api/fixtures/tokens.json
 
-
-echo 'from django.contrib.auth import authenticate
+echo '
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from rest_framework.authtoken.models import Token
@@ -222,7 +223,7 @@ def login_user(request):
         data = {"valid": True, "token": token.key}
         return Response(data)
     else:
-        # Bad login details were provided. So we cannot log the user in.
+        # Bad login details were provided. So we cant log the user in.
         data = {"valid": False}
         return Response(data)
 
@@ -306,14 +307,12 @@ class UserSerializer(serializers.ModelSerializer):
             "username",
         )
 
-
-' > /.${PROJECT_NAME}api/views/auth.py
+' > ./${PROJECT_NAME}api/views/auth.py
 
 echo '
 from .auth import login_user, register_user, get_current_user
 
-' > /.${PROJECT_NAME}api/views/__init__.py
-
+' > ./${PROJECT_NAME}api/views/__init__.py
 
 echo '{
     "version": "0.2.0",
@@ -479,17 +478,23 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 " > ./${PROJECT_NAME}project/settings.py
 
-echo "from django.contrib import admin
+echo "
+from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
+from ${PROJECT_NAME}api.views import (
+    register_user,
+    login_user,
+    get_current_user,
+    )
 
 router = routers.DefaultRouter(trailing_slash=False)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path("register", register_user),
-    path("login", login_user),
-    path("current_user", get_current_user),
+    path('register', register_user),
+    path('login', login_user),
+    path('current_user', get_current_user),
 ]
 " > ./${PROJECT_NAME}project/urls.py
 
@@ -519,10 +524,10 @@ echo '[FORMAT]
 
 pipenv run bash -c "python3 manage.py migrate"
 git init
-git remote add origin ${REPO_NAME}
-git branch -M main
 git add --all
 git commit -m "Initial commit"
+git branch -M main
+git remote add origin ${REPO_NAME}
 git push -u origin main
 
 echo "**********************************"
